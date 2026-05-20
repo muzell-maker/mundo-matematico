@@ -18,19 +18,26 @@
 
 body{
     font-family:'Baloo 2', cursive;
-    background:linear-gradient(#8ee3ff,#d9fffd);
-    min-height:100vh;
+    background:linear-gradient(180deg,#8ee3ff,#d9fffd,#fff6c9);
     overflow-x:hidden;
+    min-height:100vh;
     color:#444;
 }
 
 /* FUNDO */
 
+.sky{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-1;
+}
+
 .cloud{
     position:absolute;
     background:white;
     border-radius:50px;
-    opacity:0.8;
+    opacity:.8;
 }
 
 .cloud::before,
@@ -42,99 +49,95 @@ body{
 }
 
 .cloud1{
-    width:140px;
-    height:60px;
-    top:50px;
-    left:5%;
-    animation:float 20s infinite linear;
+    width:180px;
+    height:70px;
+    top:60px;
+    left:-200px;
+    animation:cloudMove 25s linear infinite;
 }
 
 .cloud1::before{
-    width:70px;
-    height:70px;
-    top:-25px;
+    width:90px;
+    height:90px;
+    top:-30px;
     left:20px;
 }
 
 .cloud1::after{
-    width:60px;
-    height:60px;
+    width:70px;
+    height:70px;
     top:-20px;
     right:20px;
 }
 
 .cloud2{
-    width:180px;
-    height:70px;
-    top:120px;
-    right:10%;
-    animation:float 25s infinite linear;
+    width:220px;
+    height:80px;
+    top:170px;
+    left:-300px;
+    animation:cloudMove 35s linear infinite;
 }
 
 .cloud2::before{
-    width:80px;
-    height:80px;
-    top:-30px;
+    width:100px;
+    height:100px;
+    top:-40px;
     left:25px;
 }
 
 .cloud2::after{
-    width:70px;
-    height:70px;
-    top:-20px;
+    width:80px;
+    height:80px;
+    top:-25px;
     right:30px;
 }
 
-@keyframes float{
+@keyframes cloudMove{
     from{
-        transform:translateX(-200px);
+        transform:translateX(0);
     }
     to{
-        transform:translateX(140vw);
+        transform:translateX(150vw);
     }
 }
 
-header{
+/* MENU */
+
+#mainMenu{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     text-align:center;
-    padding:30px 20px;
+    padding:20px;
+    animation:fadeIn 1s;
 }
 
-header h1{
-    font-size:70px;
-    color:#ff6fa9;
-    text-shadow:4px 4px 0 #fff;
+.title{
+    font-size:80px;
+    color:#ff5e9c;
+    text-shadow:5px 5px 0 white;
 }
 
-header p{
+.subtitle{
     font-size:28px;
     margin-top:10px;
 }
 
-.devs{
-    margin-top:20px;
-    font-size:24px;
-    background:white;
-    display:inline-block;
-    padding:12px 25px;
-    border-radius:20px;
-    border:4px dashed #ffb347;
-}
-
 .animals{
     display:flex;
-    justify-content:center;
-    gap:30px;
-    flex-wrap:wrap;
-    margin-top:20px;
+    gap:25px;
+    margin-top:25px;
 }
 
 .animal{
-    font-size:80px;
+    font-size:90px;
     animation:bounce 2s infinite;
 }
 
 .animal:nth-child(2){
-    animation-delay:0.5s;
+    animation-delay:.5s;
 }
 
 .animal:nth-child(3){
@@ -150,172 +153,262 @@ header p{
     }
 }
 
-.menu{
+.start-btn{
+    margin-top:40px;
+    border:none;
+    padding:20px 50px;
+    border-radius:25px;
+    font-size:35px;
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(45deg,#ffb347,#ff5e7e);
+    box-shadow:0 8px 0 #d94e69;
+    transition:.3s;
+}
+
+.start-btn:hover{
+    transform:scale(1.05);
+}
+
+/* TELA JOGO */
+
+#gameScreen{
+    display:none;
+    animation:fadeIn 1s;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.logo{
+    font-size:45px;
+    color:#ff5e9c;
+}
+
+.back-btn{
+    border:none;
+    padding:14px 25px;
+    border-radius:20px;
+    background:#ff7675;
+    color:white;
+    font-size:20px;
+    cursor:pointer;
+}
+
+/* MAPA */
+
+.map{
     display:flex;
     justify-content:center;
     flex-wrap:wrap;
-    gap:20px;
-    padding:30px;
+    gap:25px;
+    padding:20px;
 }
 
-.menu button{
-    border:none;
-    padding:18px 28px;
-    border-radius:25px;
-    font-size:24px;
+.phase{
+    width:210px;
+    background:white;
+    border-radius:30px;
+    padding:25px;
+    text-align:center;
     cursor:pointer;
-    font-weight:bold;
-    color:white;
-    background:linear-gradient(45deg,#ffb347,#ff6b81);
-    box-shadow:0 8px 0 #d85a6b;
-    transition:0.2s;
+    transition:.4s;
+    box-shadow:0 10px 20px rgba(0,0,0,.15);
+    border:5px solid #ffeaa7;
+    position:relative;
+    overflow:hidden;
 }
 
-.menu button:hover{
-    transform:translateY(-4px);
+.phase:hover{
+    transform:translateY(-10px) scale(1.05);
 }
+
+.phase::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(45deg,transparent,rgba(255,255,255,.5),transparent);
+    transform:translateX(-100%);
+    transition:1s;
+}
+
+.phase:hover::before{
+    transform:translateX(100%);
+}
+
+.phase-icon{
+    font-size:70px;
+}
+
+.phase h3{
+    margin-top:10px;
+    font-size:28px;
+}
+
+.phase p{
+    margin-top:8px;
+    font-size:18px;
+}
+
+/* GAME */
 
 .game{
     display:none;
-    max-width:900px;
+    max-width:950px;
     margin:30px auto;
     background:#fff8ea;
-    border:8px solid #ffd166;
     border-radius:40px;
     padding:40px;
-    text-align:center;
-    box-shadow:0 12px 30px rgba(0,0,0,0.2);
+    border:8px solid #ffd166;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+    animation:zoomIn .5s;
 }
 
 .active{
     display:block;
 }
 
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes zoomIn{
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
 .game h2{
+    text-align:center;
+    color:#ff5e7e;
     font-size:50px;
-    color:#ff6b81;
 }
 
 .question{
-    font-size:70px;
-    margin:30px 0;
-    color:#5a4fcf;
+    text-align:center;
+    font-size:75px;
+    color:#6c5ce7;
+    margin:25px 0;
 }
 
 input{
-    width:180px;
+    width:220px;
     padding:18px;
     border-radius:20px;
-    border:5px solid #8ee3ff;
+    border:5px solid #74b9ff;
     font-size:35px;
     text-align:center;
+    display:block;
+    margin:auto;
     font-family:'Baloo 2';
 }
 
 .play-btn{
-    margin-top:20px;
+    display:block;
+    margin:20px auto;
     border:none;
-    padding:16px 35px;
+    padding:18px 40px;
     border-radius:20px;
-    background:linear-gradient(45deg,#7bed9f,#2ed573);
+    background:linear-gradient(45deg,#55efc4,#00b894);
     color:white;
     font-size:28px;
-    font-weight:bold;
     cursor:pointer;
+    transition:.3s;
+}
+
+.play-btn:hover{
+    transform:scale(1.05);
 }
 
 .result{
+    text-align:center;
+    font-size:35px;
     margin-top:20px;
-    font-size:32px;
     font-weight:bold;
 }
 
 .score{
-    margin-top:15px;
+    text-align:center;
     font-size:28px;
-    color:#ff6b81;
+    margin-top:15px;
+    color:#ff7675;
 }
 
 .helper{
-    margin-top:20px;
-    background:#fff;
-    border:4px dashed #ffb347;
-    padding:15px;
+    background:white;
+    padding:18px;
     border-radius:20px;
+    border:4px dashed #ffb347;
     font-size:24px;
+    margin-top:20px;
+    text-align:center;
 }
 
-.balloons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:20px;
-    margin-top:30px;
-}
+/* TRANSIÇÃO */
 
-.balloon{
-    width:120px;
-    height:140px;
-    border-radius:50%;
-    background:linear-gradient(#ff9ff3,#f368e0);
-    display:flex;
+.transition{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle,#fff,#74b9ff);
+    display:none;
     align-items:center;
     justify-content:center;
-    color:white;
-    font-size:40px;
-    font-weight:bold;
-    cursor:pointer;
+    z-index:999;
+    font-size:80px;
+    animation:flash .8s;
 }
 
-.progress-bar{
-    width:100%;
-    height:25px;
-    background:#ddd;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:20px;
+@keyframes flash{
+    0%{
+        opacity:0;
+        transform:scale(.5);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.2);
+    }
+    100%{
+        opacity:0;
+        transform:scale(2);
+    }
 }
 
-.progress{
-    height:100%;
-    width:0%;
-    background:linear-gradient(45deg,#7bed9f,#2ed573);
-    transition:0.4s;
+footer{
+    text-align:center;
+    padding:30px;
+    font-size:22px;
 }
 
-.badge{
-    margin-top:15px;
-    font-size:28px;
-    color:#ff9f43;
+@media(max-width:700px){
+
+.title{
+    font-size:50px;
 }
 
-.timer{
-    margin-top:15px;
-    font-size:28px;
-    color:#ff6b81;
-    font-weight:bold;
+.question{
+    font-size:50px;
 }
 
-.stars{
-    font-size:35px;
-    margin-top:15px;
+.phase{
+    width:90%;
 }
 
-.combo{
-    margin-top:15px;
-    font-size:28px;
-    color:#5f27cd;
-    font-weight:bold;
-}
-
-.toys{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    display:flex;
-    justify-content:space-around;
-    font-size:60px;
-    pointer-events:none;
 }
 
 </style>
@@ -323,20 +416,26 @@ input{
 
 <body>
 
-<div class="cloud cloud1"></div>
-<div class="cloud cloud2"></div>
+<div class="sky">
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+</div>
 
-<header>
+<div class="transition" id="transition">
+✨
+</div>
 
-<h1>🐻 Mundo Matemágico 🎈</h1>
+<!-- MENU -->
 
-<p>
+<div id="mainMenu">
+
+<h1 class="title">
+🐻 Mundo Matemágico
+</h1>
+
+<p class="subtitle">
 Aprenda matemática brincando!
 </p>
-
-<div class="devs">
-👨‍💻 Desenvolvedores: Rian & Chaysi
-</div>
 
 <div class="animals">
 <div class="animal">🐻</div>
@@ -344,27 +443,61 @@ Aprenda matemática brincando!
 <div class="animal">🦊</div>
 </div>
 
-</header>
+<button class="start-btn" onclick="startGame()">
+🎮 Começar
+</button>
 
-<div class="menu">
+</div>
 
-<button onclick="showGame('game1')">➕ Soma</button>
+<!-- JOGO -->
 
-<button onclick="showGame('game2')">🎈 Balões</button>
+<div id="gameScreen">
 
-<button onclick="showGame('game3')">🏎️ Corrida</button>
+<div class="topbar">
 
-<button onclick="showGame('game4')">✖️ Multiplicação</button>
+<h1 class="logo">
+🌈 Fases Matemágicas
+</h1>
 
-<button onclick="showGame('game5')">🧩 Quiz</button>
+<button class="back-btn" onclick="goMenu()">
+🏠 Menu
+</button>
 
-<button onclick="showGame('game6')">🎯 Número Secreto</button>
+</div>
+
+<!-- MAPA -->
+
+<div class="map">
+
+<div class="phase" onclick="showGame('game1')">
+<div class="phase-icon">➕</div>
+<h3>Soma</h3>
+<p>Aprenda continhas fáceis</p>
+</div>
+
+<div class="phase" onclick="showGame('game2')">
+<div class="phase-icon">✖️</div>
+<h3>Multiplicação</h3>
+<p>Treine tabuada</p>
+</div>
+
+<div class="phase" onclick="showGame('game3')">
+<div class="phase-icon">🎈</div>
+<h3>Balões</h3>
+<p>Estoure a resposta certa</p>
+</div>
+
+<div class="phase" onclick="showGame('game4')">
+<div class="phase-icon">🧩</div>
+<h3>Quiz</h3>
+<p>Escolha correta</p>
+</div>
 
 </div>
 
 <!-- SOMA -->
 
-<div id="game1" class="game active">
+<div id="game1" class="game">
 
 <h2>🐻 Desafio da Soma</h2>
 
@@ -372,109 +505,24 @@ Aprenda matemática brincando!
 
 <input type="number" id="sumAnswer">
 
-<br>
-
 <button class="play-btn" onclick="checkSum()">
 Responder 🎉
 </button>
 
 <div class="helper" id="sumHelper"></div>
 
-<div class="progress-bar">
-<div class="progress" id="sumProgress"></div>
-</div>
-
-<div class="badge" id="sumBadge">
-🥉 Iniciante
-</div>
-
-<div class="timer" id="sumTimer">
-⏰ Tempo: 30
-</div>
-
 <div class="result" id="sumResult"></div>
 
 <div class="score">
-⭐ Pontos: <span id="sumScore">0</span>
+⭐ Pontos:
+<span id="sumScore">0</span>
 </div>
-
-</div>
-
-<!-- BALÕES -->
-
-<div id="game2" class="game">
-
-<h2>🎈 Estoure o Balão</h2>
-
-<div class="question" id="balloonQuestion"></div>
-
-<div class="stars" id="balloonStars">
-⭐⭐⭐
-</div>
-
-<div class="combo" id="balloonCombo">
-🔥 Combo: 0
-</div>
-
-<div class="balloons" id="balloons"></div>
-
-<div class="result" id="balloonResult"></div>
-
-</div>
-
-<!-- CORRIDA -->
-
-<div id="game3" class="game">
-
-<h2>🏎️ Corrida Matemática</h2>
-
-<div class="timer" id="raceTimer">
-⏰ Tempo: 40
-</div>
-
-<div class="badge" id="raceBadge">
-🏎️ Piloto Iniciante
-</div>
-
-<div style="
-width:100%;
-background:#ddd;
-border-radius:30px;
-height:80px;
-margin-top:30px;
-position:relative;
-overflow:hidden;
-">
-
-<div id="car" style="
-position:absolute;
-left:0;
-top:10px;
-font-size:50px;
-transition:0.4s;
-">
-🚗
-</div>
-
-</div>
-
-<div class="question" id="raceQuestion"></div>
-
-<input type="number" id="raceAnswer">
-
-<br>
-
-<button class="play-btn" onclick="checkRace()">
-Acelerar 🚀
-</button>
-
-<div class="result" id="raceResult"></div>
 
 </div>
 
 <!-- MULTIPLICAÇÃO -->
 
-<div id="game4" class="game">
+<div id="game2" class="game">
 
 <h2>🦊 Multiplicação Divertida</h2>
 
@@ -482,59 +530,61 @@ Acelerar 🚀
 
 <input type="number" id="multiAnswer">
 
-<br>
-
 <button class="play-btn" onclick="checkMulti()">
 Responder 🚀
 </button>
 
 <div class="helper" id="multiHelper"></div>
 
-<div class="progress-bar">
-<div class="progress" id="multiProgress"></div>
-</div>
-
-<div class="badge" id="multiBadge">
-🦊 Aprendiz
-</div>
-
 <div class="result" id="multiResult"></div>
 
 <div class="score">
-🌟 Pontos: <span id="multiScore">0</span>
+🌟 Pontos:
+<span id="multiScore">0</span>
 </div>
+
+</div>
+
+<!-- BALÕES -->
+
+<div id="game3" class="game">
+
+<h2>🎈 Estoure o Balão</h2>
+
+<div class="question" id="balloonQuestion"></div>
+
+<div id="balloons" style="
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:30px;
+"></div>
+
+<div class="result" id="balloonResult"></div>
 
 </div>
 
 <!-- QUIZ -->
 
-<div id="game5" class="game">
+<div id="game4" class="game">
 
 <h2>🧩 Quiz Matemático</h2>
 
 <div class="question" id="quizQuestion"></div>
-
-<div class="stars" id="quizStars">
-⭐⭐⭐
-</div>
-
-<div class="combo" id="quizCombo">
-🔥 Combo: 0
-</div>
 
 <div style="
 display:flex;
 justify-content:center;
 gap:20px;
 flex-wrap:wrap;
-margin-top:20px;
 ">
 
-<button class="play-btn" onclick="checkQuiz(0)" id="q0"></button>
+<button class="play-btn" id="q0" onclick="checkQuiz(0)"></button>
 
-<button class="play-btn" onclick="checkQuiz(1)" id="q1"></button>
+<button class="play-btn" id="q1" onclick="checkQuiz(1)"></button>
 
-<button class="play-btn" onclick="checkQuiz(2)" id="q2"></button>
+<button class="play-btn" id="q2" onclick="checkQuiz(2)"></button>
 
 </div>
 
@@ -542,48 +592,67 @@ margin-top:20px;
 
 </div>
 
-<!-- NÚMERO SECRETO -->
+<footer>
+👨‍💻 Desenvolvedores: Rian & Chaysi
+</footer>
 
-<div id="game6" class="game">
-
-<h2>🎯 Número Secreto</h2>
-
-<p style="font-size:24px;">
-Descubra o número entre 1 e 20!
-</p>
-
-<input type="number" id="secretAnswer">
-
-<br>
-
-<button class="play-btn" onclick="checkSecret()">
-Tentar 🎲
-</button>
-
-<div class="result" id="secretResult"></div>
-
-</div>
-
-<div class="toys">
-🧸 🚂 🪀 🎲 🚗 🎠
 </div>
 
 <script>
 
+/* MENU */
+
+function startGame(){
+
+document.getElementById('mainMenu').style.display='none';
+
+document.getElementById('gameScreen').style.display='block';
+}
+
+function goMenu(){
+
+document.getElementById('gameScreen').style.display='none';
+
+document.getElementById('mainMenu').style.display='flex';
+}
+
+/* TRANSIÇÃO */
+
+function transitionEffect(){
+
+const t=document.getElementById('transition');
+
+t.style.display='flex';
+
+setTimeout(()=>{
+t.style.display='none';
+},700);
+}
+
+/* TROCAR FASE */
+
 function showGame(id){
+
+transitionEffect();
 
 document.querySelectorAll('.game').forEach(game=>{
 game.classList.remove('active');
 });
 
+setTimeout(()=>{
 document.getElementById(id).classList.add('active');
+window.scrollTo({
+top:500,
+behavior:'smooth'
+});
+},300);
+
 }
 
 /* SOMA */
 
 let n1,n2;
 let sumScore=0;
-let sumTime=30;
 
 function generateSum(){
 
@@ -597,28 +666,11 @@ document.getElementById('sumHelper').innerHTML=
 `🐰 Conte ${n1} cenouras e depois mais ${n2}!`;
 }
 
-function updateSumLevel(){
-
-let progress=sumScore*10;
-
-document.getElementById('sumProgress').style.width=
-progress+'%';
-
-if(sumScore>=10){
-
-document.getElementById('sumBadge').innerHTML=
-'🥇 Mestre da Soma';
-
-}else if(sumScore>=5){
-
-document.getElementById('sumBadge').innerHTML=
-'🥈 Intermediário';
-}
-}
-
 function checkSum(){
 
-let answer=Number(document.getElementById('sumAnswer').value);
+let answer=Number(
+document.getElementById('sumAnswer').value
+);
 
 if(answer===n1+n2){
 
@@ -633,33 +685,65 @@ document.getElementById('sumResult').innerHTML=
 `😢 Era ${n1+n2}`;
 }
 
-document.getElementById('sumScore').innerHTML=sumScore;
-
-updateSumLevel();
+document.getElementById('sumScore').innerHTML=
+sumScore;
 
 document.getElementById('sumAnswer').value='';
 
 generateSum();
 }
 
-setInterval(()=>{
+generateSum();
 
-if(sumTime>0){
+/* MULTIPLICAÇÃO */
 
-sumTime--;
+let m1,m2;
+let multiScore=0;
 
-document.getElementById('sumTimer').innerHTML=
-`⏰ Tempo: ${sumTime}`;
+function generateMulti(){
+
+m1=Math.floor(Math.random()*5)+1;
+m2=Math.floor(Math.random()*5)+1;
+
+document.getElementById('multiQuestion').innerHTML=
+`${m1} × ${m2}`;
+
+document.getElementById('multiHelper').innerHTML=
+`🦊 Imagine ${m1} caixas com ${m2} brinquedos`;
 }
 
-},1000);
+function checkMulti(){
 
-generateSum();
+let ans=Number(
+document.getElementById('multiAnswer').value
+);
+
+if(ans===m1*m2){
+
+document.getElementById('multiResult').innerHTML=
+'🚀 Excelente!';
+
+multiScore++;
+
+}else{
+
+document.getElementById('multiResult').innerHTML=
+`😢 Era ${m1*m2}`;
+}
+
+document.getElementById('multiScore').innerHTML=
+multiScore;
+
+document.getElementById('multiAnswer').value='';
+
+generateMulti();
+}
+
+generateMulti();
 
 /* BALÕES */
 
 let correctBalloon;
-let balloonCombo=0;
 
 function generateBalloonGame(){
 
@@ -680,6 +764,7 @@ let rand=Math.floor(Math.random()*20)+1;
 if(!nums.includes(rand)){
 nums.push(rand);
 }
+
 }
 
 nums.sort(()=>Math.random()-0.5);
@@ -689,40 +774,29 @@ let html='';
 nums.forEach(num=>{
 
 html+=`
-<div class="balloon"
-onclick="checkBalloon(${num})">
+<div onclick="checkBalloon(${num})"
+style="
+width:120px;
+height:140px;
+border-radius:50%;
+background:linear-gradient(#fd79a8,#e84393);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+color:white;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 10px 20px rgba(0,0,0,.2);
+">
 ${num}
 </div>
 `;
+
 });
 
-document.getElementById('balloons').innerHTML=html;
-}
-
-function updateBalloonCombo(correct){
-
-if(correct){
-
-balloonCombo++;
-
-}else{
-
-balloonCombo=0;
-}
-
-document.getElementById('balloonCombo').innerHTML=
-`🔥 Combo: ${balloonCombo}`;
-
-if(balloonCombo>=5){
-
-document.getElementById('balloonStars').innerHTML=
-'⭐⭐⭐⭐⭐';
-
-}else if(balloonCombo>=3){
-
-document.getElementById('balloonStars').innerHTML=
-'⭐⭐⭐⭐';
-}
+document.getElementById('balloons').innerHTML=
+html;
 }
 
 function checkBalloon(num){
@@ -732,159 +806,20 @@ if(num===correctBalloon){
 document.getElementById('balloonResult').innerHTML=
 '🎈 Você acertou!';
 
-updateBalloonCombo(true);
-
 }else{
 
 document.getElementById('balloonResult').innerHTML=
 '😢 Ops!';
-
-updateBalloonCombo(false);
 }
 
-setTimeout(generateBalloonGame,1200);
+setTimeout(generateBalloonGame,1000);
 }
 
 generateBalloonGame();
 
-/* CORRIDA */
-
-let race1,race2;
-let carPosition=0;
-let raceTime=40;
-
-function generateRace(){
-
-race1=Math.floor(Math.random()*10)+1;
-race2=Math.floor(Math.random()*10)+1;
-
-document.getElementById('raceQuestion').innerHTML=
-`${race1} + ${race2}`;
-}
-
-function checkRace(){
-
-let ans=Number(document.getElementById('raceAnswer').value);
-
-if(ans===race1+race2){
-
-carPosition+=60;
-
-document.getElementById('raceResult').innerHTML=
-'🏁 Boa!';
-
-}else{
-
-document.getElementById('raceResult').innerHTML=
-'😢 Errou!';
-}
-
-document.getElementById('car').style.left=
-carPosition+'px';
-
-document.getElementById('raceAnswer').value='';
-
-if(carPosition>=700){
-
-document.getElementById('raceResult').innerHTML=
-'🏆 Você venceu!';
-
-document.getElementById('raceBadge').innerHTML=
-'👑 Piloto Mestre';
-
-carPosition=0;
-
-setTimeout(()=>{
-document.getElementById('car').style.left='0px';
-},1000);
-}
-
-generateRace();
-}
-
-setInterval(()=>{
-
-if(raceTime>0){
-
-raceTime--;
-
-document.getElementById('raceTimer').innerHTML=
-`⏰ Tempo: ${raceTime}`;
-}
-
-},1000);
-
-generateRace();
-
-/* MULTIPLICAÇÃO */
-
-let m1,m2;
-let multiScore=0;
-
-function generateMulti(){
-
-m1=Math.floor(Math.random()*10)+1;
-m2=Math.floor(Math.random()*10)+1;
-
-document.getElementById('multiQuestion').innerHTML=
-`${m1} × ${m2}`;
-
-document.getElementById('multiHelper').innerHTML=
-`🦊 Imagine ${m1} caixas com ${m2} brinquedos.`;
-}
-
-function updateMultiLevel(){
-
-let progress=multiScore*10;
-
-document.getElementById('multiProgress').style.width=
-progress+'%';
-
-if(multiScore>=10){
-
-document.getElementById('multiBadge').innerHTML=
-'👑 Rei da Multiplicação';
-
-}else if(multiScore>=5){
-
-document.getElementById('multiBadge').innerHTML=
-'🚀 Avançado';
-}
-}
-
-function checkMulti(){
-
-let ans=Number(document.getElementById('multiAnswer').value);
-
-if(ans===m1*m2){
-
-document.getElementById('multiResult').innerHTML=
-'🚀 Excelente!';
-
-multiScore++;
-
-}else{
-
-document.getElementById('multiResult').innerHTML=
-`😢 Era ${m1*m2}`;
-}
-
-document.getElementById('multiScore').innerHTML=
-multiScore;
-
-updateMultiLevel();
-
-document.getElementById('multiAnswer').value='';
-
-generateMulti();
-}
-
-generateMulti();
-
 /* QUIZ */
 
 let quizCorrect;
-let quizCombo=0;
 
 function generateQuiz(){
 
@@ -905,36 +840,21 @@ let rand=Math.floor(Math.random()*20)+1;
 if(!options.includes(rand)){
 options.push(rand);
 }
+
 }
 
 options.sort(()=>Math.random()-0.5);
 
-document.getElementById('q0').innerHTML=options[0];
-document.getElementById('q1').innerHTML=options[1];
-document.getElementById('q2').innerHTML=options[2];
+document.getElementById('q0').innerHTML=
+options[0];
+
+document.getElementById('q1').innerHTML=
+options[1];
+
+document.getElementById('q2').innerHTML=
+options[2];
 
 window.quizOptions=options;
-}
-
-function updateQuizCombo(correct){
-
-if(correct){
-
-quizCombo++;
-
-}else{
-
-quizCombo=0;
-}
-
-document.getElementById('quizCombo').innerHTML=
-`🔥 Combo: ${quizCombo}`;
-
-if(quizCombo>=5){
-
-document.getElementById('quizStars').innerHTML=
-'⭐⭐⭐⭐⭐';
-}
 }
 
 function checkQuiz(index){
@@ -944,51 +864,16 @@ if(window.quizOptions[index]===quizCorrect){
 document.getElementById('quizResult').innerHTML=
 '🎉 Resposta correta!';
 
-updateQuizCombo(true);
-
 }else{
 
 document.getElementById('quizResult').innerHTML=
 '😢 Resposta errada!';
-
-updateQuizCombo(false);
 }
 
 setTimeout(generateQuiz,1000);
 }
 
 generateQuiz();
-
-/* NÚMERO SECRETO */
-
-let secretNumber=Math.floor(Math.random()*20)+1;
-
-function checkSecret(){
-
-let guess=Number(
-document.getElementById('secretAnswer').value
-);
-
-if(guess===secretNumber){
-
-document.getElementById('secretResult').innerHTML=
-'🏆 Você acertou o número secreto!';
-
-secretNumber=Math.floor(Math.random()*20)+1;
-
-}else if(guess<secretNumber){
-
-document.getElementById('secretResult').innerHTML=
-'⬆️ O número é maior!';
-
-}else{
-
-document.getElementById('secretResult').innerHTML=
-'⬇️ O número é menor!';
-}
-
-document.getElementById('secretAnswer').value='';
-}
 
 </script>
 
